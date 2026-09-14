@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/oyuncu.tscn" id="1_oyuncu"]
+
+[sub_resource type="RectangleShape2D" id="1_zemin"]
+size = Vector2(960, 24)
+
+[sub_resource type="RectangleShape2D" id="2_platform"]
+size = Vector2(120, 16)
+
+[node name="Level" type="Node2D"]
+
+[node name="Arkaplan" type="Polygon2D" parent="."]
+color = Color(0.1, 0.12, 0.17, 1)
+polygon = PackedVector2Array(0, 0, 960, 0, 960, 360, 0, 360)
+
+[node name="Zemin" type="StaticBody2D" parent="."]
+position = Vector2(480, 340)
+
+[node name="ZeminCarpisma" type="CollisionShape2D" parent="Zemin"]
+shape = SubResource("1_zemin")
+
+[node name="ZeminGorsel" type="Polygon2D" parent="Zemin"]
+color = Color(0.3, 0.5, 0.32, 1)
+polygon = PackedVector2Array(-480, -12, 480, -12, 480, 12, -480, 12)
+
+[node name="Platform1" type="StaticBody2D" parent="."]
+position = Vector2(260, 250)
+
+[node name="Carpisma" type="CollisionShape2D" parent="Platform1"]
+shape = SubResource("2_platform")
+
+[node name="Gorsel" type="Polygon2D" parent="Platform1"]
+color = Color(0.45, 0.42, 0.55, 1)
+polygon = PackedVector2Array(-60, -8, 60, -8, 60, 8, -60, 8)
+
+[node name="Platform2" type="StaticBody2D" parent="."]
+position = Vector2(520, 180)
+
+[node name="Carpisma" type="CollisionShape2D" parent="Platform2"]
+shape = SubResource("2_platform")
+
+[node name="Gorsel" type="Polygon2D" parent="Platform2"]
+color = Color(0.45, 0.42, 0.55, 1)
+polygon = PackedVector2Array(-60, -8, 60, -8, 60, 8, -60, 8)
+
+[node name="Oyuncu" parent="." instance=ExtResource("1_oyuncu")]
+position = Vector2(120, 300)
+
+[node name="Bilgi" type="Label" parent="."]
+offset_left = 24.0
+offset_top = 28.0
+offset_right = 460.0
+offset_bottom = 60.0
+text = "YANDAN GORUNUM â€” A/D hareket, Bosluk zipla"

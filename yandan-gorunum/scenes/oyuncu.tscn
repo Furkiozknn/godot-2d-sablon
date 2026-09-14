@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/oyuncu.gd" id="1_kod"]
+
+[sub_resource type="RectangleShape2D" id="1_govde"]
+size = Vector2(14, 22)
+
+[node name="Oyuncu" type="CharacterBody2D"]
+script = ExtResource("1_kod")
+
+[node name="Gorsel" type="Polygon2D" parent="."]
+color = Color(1, 0.6, 0.25, 1)
+polygon = PackedVector2Array(-7, -11, 7, -11, 7, 11, -7, 11)
+
+[node name="Carpisma" type="CollisionShape2D" parent="."]
+shape = SubResource("1_govde")
+
+[node name="Kamera" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
