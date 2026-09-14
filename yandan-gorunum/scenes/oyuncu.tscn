@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/oyuncu.gd" id="1_kod"]
+[ext_resource type="SpriteFrames" path="res://assets/oyuncu_frames.tres" id="2_kareler"]
 
 [sub_resource type="RectangleShape2D" id="1_govde"]
 size = Vector2(14, 22)
@@ -8,9 +9,9 @@ size = Vector2(14, 22)
 [node name="Oyuncu" type="CharacterBody2D"]
 script = ExtResource("1_kod")
 
-[node name="Gorsel" type="Polygon2D" parent="."]
-color = Color(1, 0.6, 0.25, 1)
-polygon = PackedVector2Array(-7, -11, 7, -11, 7, 11, -7, 11)
+[node name="Gorsel" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_kareler")
+animation = &"idle"
 
 [node name="Carpisma" type="CollisionShape2D" parent="."]
 shape = SubResource("1_govde")

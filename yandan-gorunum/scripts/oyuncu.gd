@@ -14,6 +14,9 @@ extends CharacterBody2D
 
 var _kojot: float = 0.0
 var _tampon: float = 0.0
+var _bakis_yonu: float = 1.0
+
+@onready var _gorsel: AnimatedSprite2D = $Gorsel
 
 func _physics_process(delta: float) -> void:
     if not is_on_floor():
@@ -43,3 +46,15 @@ func _physics_process(delta: float) -> void:
         velocity.x = move_toward(velocity.x, 0.0, 1200.0 * delta * carpan)
 
     move_and_slide()
+
+    if yon != 0.0:
+        _bakis_yonu = yon
+    _gorsel.flip_h = _bakis_yonu < 0.0
+
+    var hedef_animasyon: StringName
+    if is_on_floor():
+        hedef_animasyon = &"idle" if abs(velocity.x) < 5.0 else &"yuru"
+    else:
+        hedef_animasyon = &"zipla" if velocity.y < 0.0 else &"dus"
+    if _gorsel.animation != hedef_animasyon:
+        _gorsel.play(hedef_animasyon)
