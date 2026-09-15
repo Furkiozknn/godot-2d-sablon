@@ -16,6 +16,10 @@ Thumbs.db
 desktop.ini
 .DS_Store
 
+# Python (arac/zipla-egrisi.py calistirilinca olusur)
+__pycache__/
+*.py[cod]
+
 # Editor
 .vscode/
 *.tmp
