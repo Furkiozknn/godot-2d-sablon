@@ -1,108 +1,147 @@
-# Godot 2D ÅablonlarÄ±
+# Godot 2D Şablonları
 
-Bu klasÃ¶r iki hazÄ±r, **Ã§alÄ±ÅŸÄ±r durumda** Godot 4.7 projesi iÃ§erir:
+**Godot 4.7 için iki çalışır durumda 2D iskelet proje: üstten görünüm ve yandan görünüm.**
+Boş bir proje açıp hareket kodunu sıfırdan yazmak yerine, hissi ayarlanmış bir
+karakter denetleyicisiyle başlayın.
 
-| KlasÃ¶r | TÃ¼r | Ne var iÃ§inde |
+> **English:** Two ready-to-run Godot 4.7 2D starter projects — a top-down
+> controller (8-directional, accelerated) and a side-scroller with coyote time,
+> jump buffering and variable jump height. Configured for the GL Compatibility
+> renderer and pixel-perfect rendering. Turkish-language source comments.
+
+[![Godot](https://img.shields.io/badge/Godot-4.7-478cbf?logo=godotengine&logoColor=white)](https://godotengine.org/)
+[![Renderer](https://img.shields.io/badge/renderer-GL%20Compatibility-5c6bc0)](#neden-gl-compatibility)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+---
+
+## Ne var içinde
+
+| Klasör | Tür | İçerik |
 |---|---|---|
-| `ustten-gorunum/` | Top-down | 8 yÃ¶nlÃ¼ ivmeli hareket, sÄ±nÄ±rlÄ± oda, takip eden kamera |
-| `yandan-gorunum/` | Side-scroller | YerÃ§ekimi, zÄ±plama, 2 platform, takip eden kamera |
+| `ustten-gorunum/` | Top-down | 8 yönlü ivmeli hareket, sınırlı oda, takip eden kamera, TileMapLayer hazır |
+| `yandan-gorunum/` | Side-scroller | Yerçekimi, kojot süresi, zıplama tamponu, değişken zıplama yüksekliği, 2 platform |
 
-## Hemen Ã§alÄ±ÅŸtÄ±r
+İki proje de bağımsızdır: birini kopyalayıp doğrudan kendi oyununuza
+dönüştürebilirsiniz.
 
+## Hemen çalıştır
+
+Godot 4.7 kurulu olmalı. Depoyu klonlayın ve iki projeden birini açın:
+
+```bash
+git clone https://github.com/Furkiozknn/godot-2d-sablon.git
+cd godot-2d-sablon
+
+godot --path ustten-gorunum
+godot --path yandan-gorunum
 ```
-godot --path "D:\Repolar\godot-2d-sablon\ustten-gorunum"
-godot --path "D:\Repolar\godot-2d-sablon\yandan-gorunum"
-```
 
-Ya da Godot'u aÃ§Ä±p **Import** ile `project.godot` dosyasÄ±nÄ± seÃ§.
+Ya da Godot'u açıp **Import** ile ilgili klasördeki `project.godot` dosyasını seçin.
 
 **Kontroller**
-- Ãœstten gÃ¶rÃ¼nÃ¼m: `WASD` / yÃ¶n tuÅŸlarÄ±, `E` etkileÅŸim
-- Yandan gÃ¶rÃ¼nÃ¼m: `A`/`D` hareket, `BoÅŸluk` veya `W` zÄ±pla
 
-## Neden bu ayarlar?
+| | Üstten görünüm | Yandan görünüm |
+|---|---|---|
+| Hareket | `WASD` / yön tuşları | `A` `D` / sol-sağ |
+| Zıplama | — | `Boşluk` veya `W` |
+| Etkileşim | `E` | — |
 
-Bu makinede **Intel UHD Graphics** var (tÃ¼mleÅŸik, ayrÄ± ekran kartÄ± yok) ve
-sÃ¼rÃ¼cÃ¼sÃ¼ eski. Godot 4'Ã¼n varsayÄ±lan **Forward+** renderer'Ä± Vulkan istiyor ve
-eski Intel sÃ¼rÃ¼cÃ¼lerinde Ã§Ã¶kme/doÄŸrulama hatasÄ± biliniyor bir sorun. O yÃ¼zden
-her iki proje de **GL Compatibility** renderer'Ä±na ayarlÄ±:
+> `etkilesim` (E) girdi eylemi tanımlı ama henüz hiçbir koda bağlı değil;
+> kendi etkileşiminizi bağlamanız için hazır bekliyor.
 
-```
+## Yandan görünümdeki üç önemli detay
+
+`yandan-gorunum/scripts/oyuncu.gd` içinde platform oyunlarını "iyi hissettiren"
+üç teknik var. Bunlar olmadan oyun teknik olarak çalışır ama hantal hissettirir:
+
+1. **Kojot süresi** (coyote time) — platformun kenarından düştükten sonra
+   0,12 saniye daha zıplayabilirsiniz. Oyuncu "tam basmıştım" hissi yaşamaz.
+   (`oyuncu.gd`, `_kojot`)
+2. **Zıplama tamponu** (jump buffer) — yere inmeden hemen önce boşluğa
+   bastıysanız, yere değdiğiniz an zıplarsınız. Basılan tuş yutulmaz.
+   (`oyuncu.gd`, `_tampon`)
+3. **Değişken zıplama yüksekliği** — tuşu erken bırakırsanız zıplama kısalır
+   (`velocity.y *= 0.45`). Kısa/uzun zıplama kontrolü verir.
+
+Değerler `@export` ile dışa açık: editörde `Oyuncu` düğümünü seçip
+Inspector'dan deneyerek ayarlayın.
+
+## Neden GL Compatibility
+
+Godot 4'ün varsayılan **Forward+** renderer'ı Vulkan ister. Tümleşik Intel GPU'lar
+ve eski sürücülerde bu kombinasyon çökme ve doğrulama hatası üretebiliyor. Her iki
+proje de **GL Compatibility** renderer'ına ayarlı:
+
+```ini
 renderer/rendering_method="gl_compatibility"
 ```
 
-Bu bir taviz deÄŸil â€” 2D iÃ§in doÄŸru seÃ§im zaten: daha hafif, tÃ¼mleÅŸik GPU'da
-daha hÄ±zlÄ±, web export'u da sorunsuz.
+Bu bir taviz değil — 2D için zaten doğru seçim: daha hafif, tümleşik GPU'da daha
+hızlı, web export'u sorunsuz.
 
-DiÄŸer ayarlar:
-- **640x360 taban Ã§Ã¶zÃ¼nÃ¼rlÃ¼k**, 1280x720 pencere â€” 2x, 3x tam kat Ã¶lÃ§ekler
-- `stretch/mode="canvas_items"` + `aspect="keep"` â€” piksel bozulmaz
-- `default_texture_filter=0` (nearest) â€” pixel art bulanÄ±klaÅŸmaz
-- `snap_2d_transforms_to_pixel=true` â€” titreme (jitter) olmaz
-- 60 fizik tick
+Pixel art için ayarlanan diğer değerler:
 
-## KlasÃ¶r dÃ¼zeni
+| Ayar | Değer | Neden |
+|---|---|---|
+| Taban çözünürlük | 640×360 (pencere 1280×720) | 2×, 3× tam kat ölçekler |
+| `stretch/mode` | `canvas_items` + `aspect=keep` | Piksel bozulmaz |
+| `default_texture_filter` | `0` (nearest) | Pixel art bulanıklaşmaz |
+| `snap_2d_transforms_to_pixel` | `true` | Titreme (jitter) olmaz |
+| Fizik tick | 60 | Sabit adım |
+
+## Proje yapısı
 
 ```
 <proje>/
-  scenes/      .tscn sahne dosyalarÄ±
-  scripts/     .gd kod dosyalarÄ±
+  project.godot        proje ayarları (renderer, girdi eylemleri, çözünürlük)
+  export_presets.cfg   Windows Masaüstü + Web (HTML5) hedefleri
+  icon.svg             yer tutucu ikon — kendinizinkiyle değiştirin
+  scenes/
+    level.tscn         ana sahne
+    oyuncu.tscn        oyuncu sahnesi
+  scripts/
+    oyuncu.gd          karakter denetleyicisi
   assets/
-    sprites/   gÃ¶rseller
-    audio/     ses
-    fonts/     yazÄ± tipleri
-  addons/      eklentiler (ÅŸimdilik boÅŸ, gerekmiyor)
-  icon.svg     yer tutucu ikon â€” kendi ikonunla deÄŸiÅŸtir
+    sprites/           görseller
 ```
 
-`ortak-varliklar/` klasÃ¶rÃ¼ iki projede de kullanacaÄŸÄ±n ortak dosyalar iÃ§in.
+`assets/` altına kendi `audio/`, `fonts/` klasörlerinizi ekleyebilirsiniz;
+şablon bunları varsaymaz.
 
-## DÄ±ÅŸa aktarma
+## Dışa aktarma
 
-`export_presets.cfg` hazÄ±r, iki hedef tanÄ±mlÄ±:
-- **Windows Masaustu** -> `build/windows/oyun.exe`
-- **Web (HTML5)** -> `build/web/index.html`
+`export_presets.cfg` iki hedefle hazır gelir:
 
-Komut satÄ±rÄ±ndan:
-```
-godot --headless --path "<proje yolu>" --export-release "Windows Masaustu"
-godot --headless --path "<proje yolu>" --export-release "Web (HTML5)"
+```bash
+godot --headless --path ustten-gorunum --export-release "Windows Masaustu"
+godot --headless --path ustten-gorunum --export-release "Web (HTML5)"
 ```
 
-Export ÅŸablonlarÄ± (4.7.2) zaten kurulu, ek indirme gerekmiyor.
+Çıktılar `build/windows/` ve `build/web/` altına düşer (bunlar `.gitignore`'da).
+İlgili Godot **export template**'lerinin kurulu olması gerekir.
 
-## Yandan gÃ¶rÃ¼nÃ¼mdeki Ã¼Ã§ Ã¶nemli detay
+## Nasıl devam edilir
 
-`scripts/oyuncu.gd` iÃ§inde platform oyunlarÄ±nÄ± "iyi hissettiren" Ã¼Ã§ teknik var.
-Bunlar olmadan oyun teknik olarak Ã§alÄ±ÅŸÄ±r ama hantal hissettirir:
+1. 16×16 veya 32×32 bir karakter çizip `assets/sprites/` içine PNG kaydedin
+   (Pixelorama, Aseprite, Krita — hangisi elinizdeyse).
+2. `Gorsel` düğümünü `AnimatedSprite2D`'ye çevirip `SpriteFrames` oluşturun
+   (yandan görünümde zaten `AnimatedSprite2D` ve `idle`/`yuru`/`zipla`/`dus`
+   animasyon adları bekleniyor).
+3. Üstten görünümde zemin için **TileMapLayer** ekleyin — Godot'un dahili
+   tilemap editörü yeterli, harici bir araca gerek yok.
+4. Ses için `AudioStreamPlayer2D` ekleyin.
 
-1. **Kojot sÃ¼resi** (coyote time) â€” platformun kenarÄ±ndan dÃ¼ÅŸtÃ¼kten sonra
-   0,12 saniye daha zÄ±playabilirsin. Oyuncu "tam basmÄ±ÅŸtÄ±m" hissi yaÅŸamaz.
-2. **ZÄ±plama tamponu** (jump buffer) â€” yere inmeden hemen Ã¶nce boÅŸluÄŸa
-   bastÄ±ysan, yere deÄŸdiÄŸin an zÄ±plar. BasÄ±lan tuÅŸ yutulmaz.
-3. **DeÄŸiÅŸken zÄ±plama yÃ¼ksekliÄŸi** â€” tuÅŸu erken bÄ±rakÄ±rsan zÄ±plama kÄ±salÄ±r.
-   KÄ±sa/uzun zÄ±plama kontrolÃ¼ verir.
+## Katkı
 
-DeÄŸerleri editÃ¶rde `Oyuncu` dÃ¼ÄŸÃ¼mÃ¼nÃ¼ seÃ§ip Inspector'dan deneyerek ayarla.
+Hata bildirimi ve öneriler için issue açın. Kod katkısı gönderiyorsanız her iki
+projenin de Godot 4.7 ile hatasız içe aktarıldığını doğrulayın:
 
-## Elindeki araÃ§lar
+```bash
+godot --headless --path ustten-gorunum --quit
+godot --headless --path yandan-gorunum --quit
+```
 
-| AraÃ§ | Yol | Ne iÃ§in |
-|---|---|---|
-| **Pixelorama 1.2.1** | `D:\Araclar\Pixelorama\Pixelorama-Windows-64bit\Pixelorama.exe` | **Sprite ve pixel art + animasyon.** Ä°lk aÃ§acaÄŸÄ±n bu. Godot ile yazÄ±lmÄ±ÅŸ, sprite sheet dÄ±ÅŸa aktarÄ±r. |
-| Krita 5.3.3 | `D:\Araclar\krita\bin\krita.exe` | Elle Ã§izim, bÃ¼yÃ¼k tuval, doku. Pixelorama'yÄ± tamamlar. |
-| rFXGen 5.0 | `D:\Araclar\rFXGen\rfxgen_v5.0_win_x64\rfxgen.exe` | ZÄ±plama/vuruÅŸ/toplama sesi Ã¼retir. Tek tÄ±kla retro sfx. |
-| butler | `D:\Araclar\butler\butler.exe` | Oyunu itch.io'ya yÃ¼kler. |
-| ffmpeg 9.0.1 | PATH'te | Ses/video dÃ¶nÃ¼ÅŸtÃ¼rme. |
+## Lisans
 
-## Sonraki adÄ±mlar
-
-1. **Pixelorama**'yÄ± aÃ§, 16x16 veya 32x32 bir karakter Ã§iz, `assets/sprites/` iÃ§ine PNG kaydet.
-2. `Gorsel` dÃ¼ÄŸÃ¼mÃ¼nÃ¼ `Polygon2D`'den `AnimatedSprite2D`'ye Ã§evir, SpriteFrames
-   oluÅŸtur.
-3. Ãœstten gÃ¶rÃ¼nÃ¼mde zemin iÃ§in **TileMapLayer** ekle (Godot'un dahili tilemap
-   editÃ¶rÃ¼ yeterli â€” Tiled gibi harici araca gerek yok).
-4. Sesler iÃ§in `assets/audio/` + `AudioStreamPlayer2D`.
-
-_Bu ÅŸablonlar Claude tarafÄ±ndan hazÄ±rlandÄ± ve headless iÃ§e aktarma testinden
-hatasÄ±z geÃ§ti (2026-09-14)._
+[MIT](LICENSE) — şablonları dilediğiniz gibi kullanın, kredi vermeniz gerekmez.
