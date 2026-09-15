@@ -1,5 +1,5 @@
 extends CharacterBody2D
-## Ustten gorunum (top-down) oyuncu hareketi â€” 8 yonlu, ivmeli.
+## Ustten gorunum (top-down) oyuncu hareketi - 8 yonlu, ivmeli.
 
 @export var hiz: float = 120.0
 @export var ivme: float = 900.0
