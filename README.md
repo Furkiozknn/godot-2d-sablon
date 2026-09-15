@@ -63,7 +63,7 @@ Ya da Godot'u açıp **Import** ile ilgili klasördeki `project.godot` dosyasın
 gövdesi aynı sabitlerle, projenin 60 Hz sabit adımıyla koşturuldu ve çıkan konumlar
 çizildi. 58 px, teorik `v²/2g` değeri olan 55,6 px'ten büyük — aradaki fark ayrık
 entegrasyonun kendisi, ve oyunda hissettiğiniz de bu. Sayıları kendiniz üretmek için:
-`python3 arac/zipla-egrisi.py` (bağımlılık yok).</i></sub>
+`python3 arac/zipla-egrisi.py` — Windows'ta `python arac\zipla-egrisi.py`. Bağımlılık yok.</i></sub>
 
 1. **Kojot süresi** (coyote time) — platformun kenarından düştükten sonra
    0,12 saniye daha zıplayabilirsiniz. Oyuncu "tam basmıştım" hissi yaşamaz.
