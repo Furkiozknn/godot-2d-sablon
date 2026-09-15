@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""README'deki zıplama eğrilerinin kaynağı.
+r"""README'deki zıplama eğrilerinin kaynağı.
 
 `yandan-gorunum/scripts/oyuncu.gd` içindeki `_physics_process` gövdesinin
-birebir kopyası. Sabitler o dosyadan, fizik adımı `project.godot`
-içindeki 60 Hz'den geliyor. Godot'ta +y aşağı; burada da öyle.
+birebir kopyası. Sabitler o dosyadan, fizik adımı `project.godot`'tan
+**çalışma anında okunur** — burada kopyalanmaz. Denetleyicinin hissi
+değişirse bu çıktı da, README'deki eğriler de onu takip eder. Godot'ta
++y aşağı; burada da öyle.
 
-Amaç: `assets/zipla-hissi.svg` üzerindeki sayıların elle uydurulmadığını
+Amaç: `docs/zipla-hissi.svg` üzerindeki sayıların elle uydurulmadığını
 göstermek. Bağımlılık yok:
 
-    python3 arac/zipla-egrisi.py
+    python3 arac/zipla-egrisi.py      # Windows'ta: python arac\zipla-egrisi.py
 """
 
 import sys
@@ -23,12 +25,46 @@ try:
 except (AttributeError, OSError, ValueError):  # Python < 3.7 veya tuhaf stdout
     pass
 
-DT = 1.0 / 60.0            # project.godot: physics/common/physics_ticks_per_second
-ZIPLA_GUCU = 330.0         # oyuncu.gd: @export var zipla_gucu
-YERCEKIMI = 980.0          # oyuncu.gd: @export var yercekimi
-KOJOT = 0.12               # oyuncu.gd: @export var kojot_suresi
-TAMPON = 0.12              # oyuncu.gd: @export var zipla_tampon_suresi
-KESME = 0.45               # oyuncu.gd: velocity.y *= 0.45
+import re
+from pathlib import Path
+
+KOK = Path(__file__).resolve().parent.parent
+_GD = KOK / "yandan-gorunum" / "scripts" / "oyuncu.gd"
+_PROJE = KOK / "yandan-gorunum" / "project.godot"
+
+
+def _dosya(yol):
+    try:
+        return yol.read_text(encoding="utf-8")
+    except OSError as e:
+        raise SystemExit(f"okunamadi: {yol} ({e})")
+
+
+def _export(kaynak, ad):
+    """oyuncu.gd icindeki `@export var <ad>: float = <sayi>` degerini okur."""
+    m = re.search(rf"@export\s+var\s+{ad}\s*:\s*float\s*=\s*([0-9.]+)", kaynak)
+    if not m:
+        raise SystemExit(f"oyuncu.gd icinde '{ad}' bulunamadi - adi mi degisti?")
+    return float(m.group(1))
+
+
+# Sabitler oyuncu.gd'den OKUNUR, burada kopyalanmaz. Boylece birileri
+# denetleyicinin hissini degistirdiginde bu betigin ciktisi ve README'deki
+# egriler kendiliginden onu takip eder; sessizce yanlis kalamazlar.
+_KAYNAK = _dosya(_GD)
+ZIPLA_GUCU = _export(_KAYNAK, "zipla_gucu")
+YERCEKIMI = _export(_KAYNAK, "yercekimi")
+KOJOT = _export(_KAYNAK, "kojot_suresi")
+TAMPON = _export(_KAYNAK, "zipla_tampon_suresi")
+
+_kesme = re.search(r"velocity\.y\s*\*=\s*([0-9.]+)", _KAYNAK)
+if not _kesme:
+    raise SystemExit("oyuncu.gd icinde degisken zipla kesmesi (velocity.y *= ...) bulunamadi")
+KESME = float(_kesme.group(1))
+
+_tick = re.search(r"physics_ticks_per_second\s*=\s*([0-9]+)", _dosya(_PROJE))
+TICK = int(_tick.group(1)) if _tick else 60      # Godot varsayilani 60
+DT = 1.0 / TICK
 
 
 def kos(sure, y0=0.0, zemin_biter=None, bas_t=None, birak_t=None):
