@@ -1,3 +1,5 @@
+![godot-2d-sablon — Godot 4.7 için iki çalışır 2D iskelet proje: üstten görünüm ve yandan görünüm](docs/banner.svg)
+
 # Godot 2D Şablonları
 
 **Godot 4.7 için iki çalışır durumda 2D iskelet proje: üstten görünüm ve yandan görünüm.**
@@ -55,6 +57,14 @@ Ya da Godot'u açıp **Import** ile ilgili klasördeki `project.godot` dosyasın
 `yandan-gorunum/scripts/oyuncu.gd` içinde platform oyunlarını "iyi hissettiren"
 üç teknik var. Bunlar olmadan oyun teknik olarak çalışır ama hantal hissettirir:
 
+![Üç tekniğin gerçek fizik simülasyonu: tuşu basılı tutmak 58 piksel, 0,10 saniyede bırakmak 35 piksel yükseklik veriyor; kojot süresi kenardan 0,12 saniye sonrasına kadar zıplamaya izin veriyor; zıplama tamponu inişten 0,12 saniye öncesine kadar basılan tuşu hatırlıyor](docs/zipla-hissi.svg)
+
+<sub><i>Yukarıdaki eğrilerin hiçbiri elle çizilmedi: `oyuncu.gd`'nin `_physics_process`
+gövdesi aynı sabitlerle, projenin 60 Hz sabit adımıyla koşturuldu ve çıkan konumlar
+çizildi. 58 px, teorik `v²/2g` değeri olan 55,6 px'ten büyük — aradaki fark ayrık
+entegrasyonun kendisi, ve oyunda hissettiğiniz de bu. Sayıları kendiniz üretmek için:
+`python3 arac/zipla-egrisi.py` (bağımlılık yok).</i></sub>
+
 1. **Kojot süresi** (coyote time) — platformun kenarından düştükten sonra
    0,12 saniye daha zıplayabilirsiniz. Oyuncu "tam basmıştım" hissi yaşamaz.
    (`oyuncu.gd`, `_kojot`)
@@ -108,6 +118,9 @@ Pixel art için ayarlanan diğer değerler:
 
 `assets/` altına kendi `audio/`, `fonts/` klasörlerinizi ekleyebilirsiniz;
 şablon bunları varsaymaz.
+
+Depo kökündeki iki klasör projelerin parçası değildir: `docs/` README
+görselleri, `arac/` ise o görsellerin sayılarını üreten betiktir.
 
 ## Dışa aktarma
 
