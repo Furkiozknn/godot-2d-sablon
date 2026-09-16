@@ -1,0 +1,4 @@
+# Yardimci betikler dil istatistiginden cikarilir: bu depo bir Godot sablonu,
+# GitHub onu "Python" diye etiketlemesin diye.
+arac/** linguist-detectable=false
+docs/** linguist-documentation
