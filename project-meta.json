@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0.0",
+  "id": "godot-2d-sablon",
+  "owner": "Furkiozknn",
+  "repository": "https://github.com/Furkiozknn/godot-2d-sablon",
+  "homepage": null,
+  "releases": "https://github.com/Furkiozknn/godot-2d-sablon/releases",
+  "status": "active",
+  "category": "template",
+  "platform": [
+    "godot"
+  ],
+  "primary_language": "GDScript",
+  "technologies": [
+    "Godot 4.7",
+    "GDScript",
+    "GL Compatibility renderer"
+  ],
+  "version": null,
+  "license": "MIT",
+  "topics": [
+    "2d",
+    "boilerplate",
+    "coyote-time",
+    "game-development",
+    "gamedev",
+    "gdscript",
+    "godot",
+    "godot4",
+    "pixel-perfect",
+    "platformer",
+    "starter-template",
+    "template",
+    "top-down",
+    "turkce"
+  ],
+  "summary": "Two Godot 4.7 starters that already feel right to play: top-down with 8-way accelerated movement, and side-view with coyote time, jump buffering and variable jump height. The feel is measured, not guessed - the jump curves come from running the real _physics_process at the project's 60 Hz fixed step.",
+  "key_features": [
+    "Two starter projects that already feel right to play: top-down with 8-way accelerated movement, side-view with coyote time, jump buffering and variable jump height",
+    "The feel is measured, not guessed: jump curves come from running the real _physics_process at the project's 60 Hz fixed step",
+    "GL Compatibility throughout, so it runs on integrated graphics",
+    "Export settings and project layout documented, ready to fork"
+  ],
+  "media": {
+    "hero": "docs/banner.svg",
+    "screenshots": [],
+    "gifs": [],
+    "videos": []
+  },
+  "tests": null,
+  "ci": {
+    "workflows": [],
+    "badge": null
+  },
+  "docs": {
+    "readme": "README.md",
+    "changelog": null,
+    "roadmap": null,
+    "security": null,
+    "contributing": null,
+    "license_file": "LICENSE"
+  },
+  "social": {
+    "headline": "Two Godot 4 starters whose jump feel was measured, not guessed.",
+    "hashtags": [
+      "godot",
+      "godot4",
+      "gamedev",
+      "template"
+    ],
+    "primary_link": "https://github.com/Furkiozknn/godot-2d-sablon"
+  },
+  "provenance": {
+    "generated_at": "2026-09-22",
+    "generator": "ghcc/gen_meta.py",
+    "rule": "mechanical fields read from the repository and the GitHub API; editorial fields hand-written and reviewed; no field is generated from a guess"
+  }
+}
