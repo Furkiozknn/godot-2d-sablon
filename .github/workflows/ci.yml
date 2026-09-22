@@ -114,7 +114,7 @@ jobs:
       # Bu kontrol ayni hesaptaki godot-refcheck ile yapiliyor -- motoru
       # indirmeden, iki projeyi de tarayarak.
       - name: godot-refcheck (iki proje birden)
-        uses: Furkiozknn/godot-refcheck@v0.2.0
+        uses: Furkiozknn/godot-refcheck@b083e3d2998ca0d5101289b106c76794c6de866d  # v0.2.0 + the clean-project fix
         with:
           path: .
           recursive: "true"
