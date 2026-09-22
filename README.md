@@ -161,12 +161,29 @@ CI kırmızı yanar.
 ```bash
 python3 arac/zipla-egrisi.py    # eğrileri yazdırır
 python3 arac/dogrula.py         # README ile karşılaştırır (8 kontrol)
+python3 -m pytest testler -q    # denetleyici davranışı (21 test)
 ```
+
+`dogrula.py` README'deki sayı değiştiğinde kırmızı yanar, ve doğrusu budur —
+ama *hangi* davranışın bozulduğunu söylemez. `testler/` bir seviye aşağıya
+bakıyor: kojot penceresinin gerçekten `kojot_suresi` kadar olduğunu, tamponun
+gerçekten `zipla_tampon_suresi` kadar geriye baktığını, tuşu bırakmanın tepeyi
+düşürdüğünü, zeminin gerçekten zemin olduğunu. Hiçbir sayı orada sabitlenmiyor;
+hepsi `oyuncu.gd`'den okunan sabitlerden türetiliyor, çünkü amaç sabitleri
+dondurmak değil, sabitlerle davranış arasındaki ilişkiyi korumak.
 
 İkinci iş akışı işi, oyun depolarıyla aynı sabit Godot sürümünü indirip iki
 projeyi de içe aktarıyor ve bir kare çalıştırıyor. Godot betik hatasında da
 0 ile çıkabildiği için çıkış kodu yeterli sayılmıyor; çıktının kendisi
 taranıyor.
+
+Dördüncü iş, bir şablonun en pahalı kusurunu arıyor: kırık bir kaynak
+referansı. Depoyu klonlayan kişi ilk saatini olmayan bir `.tscn`'i ararken
+harcar, ve motor bunu açılışta her zaman söylemez. Aynı hesaptaki
+[godot-refcheck](https://github.com/Furkiozknn/godot-refcheck) iki projeyi de
+tarıyor — motoru indirmeden — ve bulgular SARIF olarak kod taramaya gidiyor.
+Şu an ikisi de temiz: `ustten-gorunum` 12 dosya / 7 referans, `yandan-gorunum`
+12 dosya / 6 referans, hiçbirinde sorun yok.
 
 ## Katkı
 

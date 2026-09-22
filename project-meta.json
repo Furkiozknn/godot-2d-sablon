@@ -47,7 +47,12 @@
     "gifs": [],
     "videos": []
   },
-  "tests": null,
+  "tests": {
+    "count": 21,
+    "framework": "pytest",
+    "command": "python3 -m pytest testler -q",
+    "evidence": "21 passed"
+  },
   "ci": {
     "workflows": [
       "ci.yml"

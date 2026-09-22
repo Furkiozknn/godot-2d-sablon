@@ -30,6 +30,20 @@ env:
   GODOT_SURUM: 4.7.2-stable
 
 jobs:
+  testler:
+    name: Denetleyici davranisi
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pytest
+      # `dogrula.py` README'deki iki basligin dogrulugunu koruyor; bu suite
+      # bir seviye asagida, hangi davranisin bozuldugunu soyluyor: kojot
+      # penceresi, tampon penceresi, kesmenin tepeyi dusurmesi, zemin.
+      - run: python -m pytest testler -q
+
   egri:
     name: Zipla egrileri README ile ayni mi
     runs-on: ubuntu-latest
@@ -85,3 +99,31 @@ jobs:
             fi
             echo "$proje: temiz"
           done
+
+  referanslar:
+    name: Sablonlarin kaynak referanslari saglam mi
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+
+      # Bir sablonun en pahali kusuru kirik bir kaynak referansidir: projeyi
+      # klonlayan kisi ilk saatini olmayan bir .tscn'i ararken harciyor.
+      # Bu kontrol ayni hesaptaki godot-refcheck ile yapiliyor -- motoru
+      # indirmeden, iki projeyi de tarayarak.
+      - name: godot-refcheck (iki proje birden)
+        uses: Furkiozknn/godot-refcheck@v0.2.0
+        with:
+          path: .
+          recursive: "true"
+          fail-on: error
+          sarif: refcheck.sarif
+
+      - name: SARIF raporunu kod taramaya yukle
+        if: always() && hashFiles('refcheck.sarif') != ''
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: refcheck.sarif
+          category: godot-refcheck
