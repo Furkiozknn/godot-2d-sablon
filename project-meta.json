@@ -49,8 +49,10 @@
   },
   "tests": null,
   "ci": {
-    "workflows": [],
-    "badge": null
+    "workflows": [
+      "ci.yml"
+    ],
+    "badge": "https://github.com/Furkiozknn/godot-2d-sablon/actions/workflows/ci.yml/badge.svg"
   },
   "docs": {
     "readme": "README.md",
