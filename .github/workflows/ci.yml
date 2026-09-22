@@ -1,0 +1,87 @@
+name: CI
+
+# Bu depoda 21 Eylul 2026'ya kadar hic is akisi yoktu. Iki sey
+# dogrulanmiyordu: iki sablon projenin acilip acilmadigi, ve README'nin en
+# merkezi iddiasi -- "his olculdu, tahmin edilmedi". oyuncu.gd'deki bir
+# sabiti degistiren commit, README'deki 58/35 pikseli sessizce yanlisa
+# dusurebilirdi.
+#
+# Iki is var ve ikisi de UYDURULMUS bir komut calistirmiyor:
+#   egri     -> arac/zipla-egrisi.py'nin okudugu ayni sabitlerle simulasyon,
+#               sonuc README'nin YAZDIGI sayilarla karsilastiriliyor.
+#   projeler -> oyun depolarindakiyle ayni sabit Godot surumu, iki projeyi
+#               ice aktarip bir kare calistiriyor.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  # Surum SABIT tutuluyor: "latest", motor guncellenince bu depodan
+  # bagimsiz bir kirmizi uretirdi. Dort oyun deposuyla ayni surum.
+  GODOT_SURUM: 4.7.2-stable
+
+jobs:
+  egri:
+    name: Zipla egrileri README ile ayni mi
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Bagimlilik yok: betikler yalnizca standart kutuphane kullaniyor.
+      - name: Egriyi yazdir
+        run: python3 arac/zipla-egrisi.py
+
+      - name: README ile karsilastir
+        run: python3 arac/dogrula.py
+
+  projeler:
+    name: Iki proje de aciliyor mu
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Godot ${{ env.GODOT_SURUM }} indir
+        run: |
+          set -euo pipefail
+          ad="Godot_v${GODOT_SURUM}_linux.x86_64"
+          curl -fsSL -o godot.zip \
+            "https://github.com/godotengine/godot/releases/download/${GODOT_SURUM}/${ad}.zip"
+          unzip -q godot.zip
+          chmod +x "$ad"
+          sudo mv "$ad" /usr/local/bin/godot
+          godot --version
+
+      # Godot betik hatasinda da 0 ile cikabiliyor; bu yuzden cikis kodu
+      # yetmiyor, ciktinin kendisi taraniyor. Ice aktarma ayri adim: taze
+      # checkout'ta .godot yok ve eksik onbellek, gercek bir hatayla
+      # karisacak "Identifier not declared" gurultusu uretiyor.
+      - name: Projeleri ice aktar ve bir kare calistir
+        run: |
+          set -euo pipefail
+          for proje in ustten-gorunum yandan-gorunum; do
+            echo "::group::$proje"
+            godot --headless --path "$proje" --import 2>&1 | tee "/tmp/$proje-import.log"
+            godot --headless --path "$proje" --quit   2>&1 | tee "/tmp/$proje-run.log"
+            echo "::endgroup::"
+            if grep -qE 'SCRIPT ERROR|Parse Error|Failed to load|Cannot open file' \
+                 "/tmp/$proje-import.log" "/tmp/$proje-run.log"; then
+              echo "$proje: betik veya kaynak hatasi var"
+              grep -nE 'SCRIPT ERROR|Parse Error|Failed to load|Cannot open file' \
+                "/tmp/$proje-import.log" "/tmp/$proje-run.log"
+              exit 1
+            fi
+            echo "$proje: temiz"
+          done

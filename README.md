@@ -11,6 +11,7 @@ karakter denetleyicisiyle başlayın.
 > jump buffering and variable jump height. Configured for the GL Compatibility
 > renderer and pixel-perfect rendering. Turkish-language source comments.
 
+[![CI](https://github.com/Furkiozknn/godot-2d-sablon/actions/workflows/ci.yml/badge.svg)](https://github.com/Furkiozknn/godot-2d-sablon/actions/workflows/ci.yml)
 [![Godot](https://img.shields.io/badge/Godot-4.7-478cbf?logo=godotengine&logoColor=white)](https://godotengine.org/)
 [![Renderer](https://img.shields.io/badge/renderer-GL%20Compatibility-5c6bc0)](#neden-gl-compatibility)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -144,6 +145,28 @@ godot --headless --path ustten-gorunum --export-release "Web (HTML5)"
 3. Üstten görünümde zemin için **TileMapLayer** ekleyin — Godot'un dahili
    tilemap editörü yeterli, harici bir araca gerek yok.
 4. Ses için `AudioStreamPlayer2D` ekleyin.
+
+## Sayılar nasıl korunuyor
+
+README'deki 58 ve 35 piksel elle yazılmış değil: `arac/zipla-egrisi.py`,
+`oyuncu.gd`'deki sabitleri ve `project.godot`'taki fizik adımını **çalışma
+anında okuyup** aynı `_physics_process` gövdesini simüle ediyor.
+
+`arac/dogrula.py` o simülasyonu çalıştırır ve sonucu README'nin *yazdığı*
+sayılarla karşılaştırır — beklenen değerler buradan okunduğu için hiçbir sayı
+iki yerde durmuyor. Zıplama gücünü, yerçekimini, kesme çarpanını, kojot ya da
+tampon süresini değiştiren bir commit README'yi sessizce yanlışa düşüremez:
+CI kırmızı yanar.
+
+```bash
+python3 arac/zipla-egrisi.py    # eğrileri yazdırır
+python3 arac/dogrula.py         # README ile karşılaştırır (8 kontrol)
+```
+
+İkinci iş akışı işi, oyun depolarıyla aynı sabit Godot sürümünü indirip iki
+projeyi de içe aktarıyor ve bir kare çalıştırıyor. Godot betik hatasında da
+0 ile çıkabildiği için çıkış kodu yeterli sayılmıyor; çıktının kendisi
+taranıyor.
 
 ## Katkı
 
