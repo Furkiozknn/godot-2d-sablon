@@ -57,10 +57,7 @@ YERCEKIMI = _export(_KAYNAK, "yercekimi")
 KOJOT = _export(_KAYNAK, "kojot_suresi")
 TAMPON = _export(_KAYNAK, "zipla_tampon_suresi")
 
-_kesme = re.search(r"velocity\.y\s*\*=\s*([0-9.]+)", _KAYNAK)
-if not _kesme:
-    raise SystemExit("oyuncu.gd icinde degisken zipla kesmesi (velocity.y *= ...) bulunamadi")
-KESME = float(_kesme.group(1))
+KESME = _export(_KAYNAK, "kesme_carpani")
 
 _tick = re.search(r"physics_ticks_per_second\s*=\s*([0-9]+)", _dosya(_PROJE))
 TICK = int(_tick.group(1)) if _tick else 60      # Godot varsayilani 60

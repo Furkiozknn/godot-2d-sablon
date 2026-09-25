@@ -6,11 +6,16 @@ name: CI
 # sabiti degistiren commit, README'deki 58/35 pikseli sessizce yanlisa
 # dusurebilirdi.
 #
-# Iki is var ve ikisi de UYDURULMUS bir komut calistirmiyor:
-#   egri     -> arac/zipla-egrisi.py'nin okudugu ayni sabitlerle simulasyon,
-#               sonuc README'nin YAZDIGI sayilarla karsilastiriliyor.
-#   projeler -> oyun depolarindakiyle ayni sabit Godot surumu, iki projeyi
-#               ice aktarip bir kare calistiriyor.
+# Dort is var ve hicbiri UYDURULMUS bir komut calistirmiyor:
+#   testler     -> Python kopyasinin davranis testleri (pytest).
+#   egri        -> arac/zipla-egrisi.py'nin okudugu ayni sabitlerle simulasyon,
+#                  sonuc README'nin YAZDIGI sayilarla karsilastiriliyor.
+#   projeler    -> oyun depolarindakiyle ayni sabit Godot surumu: iki proje
+#                  ice aktariliyor, bir kare calisiyor; sonra zipla hissi
+#                  GERCEK motorda olculup Python kopyasiyla karsilastiriliyor
+#                  ve oyuncunun ornek seviyeden dusemedigi kosturularak
+#                  gosteriliyor.
+#   referanslar -> godot-refcheck ile kirik kaynak referansi taramasi.
 
 on:
   push:
@@ -34,8 +39,8 @@ jobs:
     name: Denetleyici davranisi
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - run: pip install pytest
@@ -48,9 +53,9 @@ jobs:
     name: Zipla egrileri README ile ayni mi
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -65,7 +70,7 @@ jobs:
     name: Iki proje de aciliyor mu
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Godot ${{ env.GODOT_SURUM }} indir
         run: |
@@ -100,6 +105,30 @@ jobs:
             echo "$proje: temiz"
           done
 
+      # README'deki 58/35 piksel, oyuncu.gd'nin Python'a tasinmis kopyasindan
+      # geliyor. Kopya ancak asliyla karsilastirildigi surece guvenilir:
+      # oyuncu.gd'de satirlarin sirasi degisirse Python testleri yesil kalir.
+      # Bu adim ayni senaryolari gercek Godot'ta, gercek move_and_slide ve
+      # gercek Input eylemleriyle kosturup iki sonucu yan yana koyuyor.
+      # --fixed-fps 60: gercek zamani beklemeden, projenin fizik adimiyla.
+      - name: Zipla hissini motorda olc, Python kopyasiyla karsilastir
+        run: |
+          set -euo pipefail
+          godot --headless --fixed-fps 60 --path yandan-gorunum \
+            --script "$PWD/arac/motor-olcumu.gd" 2>&1 | tee /tmp/motor.log
+          python3 arac/motor-karsilastir.py /tmp/motor.log
+
+      # Sablonu ilk acan kisi once saga sola kosar; bosluga dusup sonsuza
+      # kadar dusen bir karakter ilk bes dakikayi bitirir.
+      - name: Oyuncu ornek seviyenin icinde kaliyor mu
+        run: |
+          set -euo pipefail
+          for proje in ustten-gorunum yandan-gorunum; do
+            godot --headless --fixed-fps 60 --path "$proje" \
+              --script "$PWD/arac/seviye-sinirlari.gd" 2>&1 | tee "/tmp/$proje-seviye.log"
+            grep -q '^SEVIYE_TAMAM' "/tmp/$proje-seviye.log"
+          done
+
   referanslar:
     name: Sablonlarin kaynak referanslari saglam mi
     runs-on: ubuntu-latest
@@ -107,7 +136,7 @@ jobs:
       contents: read
       security-events: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Bir sablonun en pahali kusuru kirik bir kaynak referansidir: projeyi
       # klonlayan kisi ilk saatini olmayan bir .tscn'i ararken harciyor.
@@ -123,7 +152,7 @@ jobs:
 
       - name: SARIF raporunu kod taramaya yukle
         if: always() && hashFiles('refcheck.sarif') != ''
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: refcheck.sarif
           category: godot-refcheck
