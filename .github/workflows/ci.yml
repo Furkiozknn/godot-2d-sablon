@@ -33,6 +33,10 @@ env:
   # Surum SABIT tutuluyor: "latest", motor guncellenince bu depodan
   # bagimsiz bir kirmizi uretirdi. Dort oyun deposuyla ayni surum.
   GODOT_SURUM: 4.7.2-stable
+  # Indirilen zip calistirilmadan once bu ozetle karsilastiriliyor. Deger,
+  # godotengine/godot 4.7.2-stable surumunun SHA512-SUMS.txt dosyasindaki
+  # Godot_v4.7.2-stable_linux.x86_64.zip satirindan. Surum degisirse bu da.
+  GODOT_SHA512: 9aa00f7a605200940bce3027a567b782f49bd8e940dd06ae9e987bd65aee1b1467edd56ed84fcdcbdd44354bf613bdbb4e5d2913e925850368e150c59ed54c65
 
 jobs:
   testler:
@@ -78,6 +82,7 @@ jobs:
           ad="Godot_v${GODOT_SURUM}_linux.x86_64"
           curl -fsSL -o godot.zip \
             "https://github.com/godotengine/godot/releases/download/${GODOT_SURUM}/${ad}.zip"
+          echo "${GODOT_SHA512}  godot.zip" | sha512sum -c -
           unzip -q godot.zip
           chmod +x "$ad"
           sudo mv "$ad" /usr/local/bin/godot

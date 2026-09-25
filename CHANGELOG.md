@@ -40,7 +40,8 @@ Henüz sürüm etiketi yok; maddeler commit tarihine göre sıralı.
 - **[depo]** `arac/seviye-sinirlari.gd`: oyuncunun örnek seviyeden
   çıkamadığını iki projede de koşturarak gösteriyor; CI'da.
 - **[depo]** GitHub Actions: `checkout` v7, `setup-python` v7,
-  `upload-sarif` v4 (Node 20 emekliliği).
+  `upload-sarif` v4 (Node 20 emekliliği). CI'ın indirdiği Godot zip'i
+  çalıştırılmadan önce resmî SHA-512 özetiyle karşılaştırılıyor.
 - **[depo]** README: hızlı başlangıç, ayar tabloları (her `@export` ve
   varsayılanı; `testler/test_readme_ayarlar.py` bunları `oyuncu.gd` ile
   karşılaştırıyor), şablon güncellemelerini alma yolu, web export'undan
