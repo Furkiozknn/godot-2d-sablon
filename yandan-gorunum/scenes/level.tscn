@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/oyuncu.tscn" id="1_oyuncu"]
 
@@ -7,6 +7,9 @@ size = Vector2(960, 24)
 
 [sub_resource type="RectangleShape2D" id="2_platform"]
 size = Vector2(120, 16)
+
+[sub_resource type="RectangleShape2D" id="3_duvar"]
+size = Vector2(16, 720)
 
 [node name="Level" type="Node2D"]
 
@@ -44,8 +47,26 @@ shape = SubResource("2_platform")
 color = Color(0.45, 0.42, 0.55, 1)
 polygon = PackedVector2Array(-60, -8, 60, -8, 60, 8, -60, 8)
 
+[node name="SolDuvar" type="StaticBody2D" parent="."]
+position = Vector2(-8, 0)
+
+[node name="Carpisma" type="CollisionShape2D" parent="SolDuvar"]
+shape = SubResource("3_duvar")
+
+[node name="SagDuvar" type="StaticBody2D" parent="."]
+position = Vector2(968, 0)
+
+[node name="Carpisma" type="CollisionShape2D" parent="SagDuvar"]
+shape = SubResource("3_duvar")
+
 [node name="Oyuncu" parent="." instance=ExtResource("1_oyuncu")]
 position = Vector2(120, 300)
+
+[node name="Kamera" parent="Oyuncu" index="2"]
+limit_left = 0
+limit_top = 0
+limit_right = 960
+limit_bottom = 360
 
 [node name="Bilgi" type="Label" parent="."]
 offset_left = 24.0
@@ -53,3 +74,5 @@ offset_top = 28.0
 offset_right = 460.0
 offset_bottom = 60.0
 text = "YANDAN GORUNUM - A/D hareket, Bosluk zipla"
+
+[editable path="Oyuncu"]
