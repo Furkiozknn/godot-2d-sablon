@@ -59,12 +59,20 @@ Gerekli olan tek şey [Godot 4.7](https://godotengine.org/) (standart sürüm,
 git clone https://github.com/Furkiozknn/godot-2d-sablon.git
 cd godot-2d-sablon
 
-godot --path yandan-gorunum     # oyunu çalıştırır
-godot -e --path yandan-gorunum  # editörde açar
+godot -e --path yandan-gorunum                    # editörde açar; F5 ile oynatın
+```
+
+Editörü açmadan doğrudan oynatmak isterseniz, taze bir klonda önce görselleri
+bir kez içe aktarın — yoksa Godot `.godot/imported/...` bulamaz ve karakter
+görünmez:
+
+```bash
+godot --headless --path yandan-gorunum --import   # ilk seferde, bir kez
+godot --path yandan-gorunum                        # oyunu çalıştırır
 ```
 
 Komut satırı yerine: Godot Proje Yöneticisi → **Import** → ilgili klasördeki
-`project.godot`.
+`project.godot` (editör içe aktarmayı kendisi yapar).
 
 **Kendi oyununuzu başlatmak için** — bir projeyi kendi klasörünüze kopyalayın
 ve hangi şablon commit'inden başladığınızı not edin (ileride düzeltmeleri

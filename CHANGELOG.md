@@ -46,7 +46,9 @@ Henüz sürüm etiketi yok; maddeler commit tarihine göre sıralı.
   karşılaştırıyor), şablon güncellemelerini alma yolu, web export'undan
   gerçek ekran görüntüleri. Belgelenen `--export-release` komutu taze bir
   klonda `build/web` klasörü olmadığı için başarısız oluyordu; README artık
-  klasörü önce açıyor.
+  klasörü önce açıyor. Belgelenen `godot --path <proje>` da taze bir klonda
+  görseller içe aktarılmadığı için karakteri göstermiyordu; README artık
+  önce editörle açmayı ya da bir kez `--import` çalıştırmayı söylüyor.
 
 ## 2026-09-22 ve öncesi
 
