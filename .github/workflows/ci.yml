@@ -42,6 +42,7 @@ jobs:
   testler:
     name: Denetleyici davranisi
     runs-on: ubuntu-latest
+    timeout-minutes: 10  # olculen en uzun kosu 7 sn
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -56,6 +57,7 @@ jobs:
   egri:
     name: Zipla egrileri README ile ayni mi
     runs-on: ubuntu-latest
+    timeout-minutes: 10  # olculen en uzun kosu 8 sn
     steps:
       - uses: actions/checkout@v7
 
@@ -73,6 +75,7 @@ jobs:
   projeler:
     name: Iki proje de aciliyor mu
     runs-on: ubuntu-latest
+    timeout-minutes: 10  # olculen en uzun kosu 16 sn
     steps:
       - uses: actions/checkout@v7
 
@@ -137,6 +140,7 @@ jobs:
   referanslar:
     name: Sablonlarin kaynak referanslari saglam mi
     runs-on: ubuntu-latest
+    timeout-minutes: 10  # olculen en uzun kosu 34 sn
     permissions:
       contents: read
       security-events: write
