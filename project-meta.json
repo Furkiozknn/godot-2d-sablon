@@ -43,15 +43,18 @@
   ],
   "media": {
     "hero": "docs/banner.svg",
-    "screenshots": [],
+    "screenshots": [
+      "docs/ekran-yandan.png",
+      "docs/ekran-ustten.png"
+    ],
     "gifs": [],
     "videos": []
   },
   "tests": {
-    "count": 21,
+    "count": 37,
     "framework": "pytest",
     "command": "python3 -m pytest testler -q",
-    "evidence": "21 passed"
+    "evidence": "37 passed"
   },
   "ci": {
     "workflows": [
@@ -61,7 +64,7 @@
   },
   "docs": {
     "readme": "README.md",
-    "changelog": null,
+    "changelog": "CHANGELOG.md",
     "version_history": null,
     "roadmap": null,
     "security": null,

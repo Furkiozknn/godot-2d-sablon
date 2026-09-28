@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" path="res://scenes/oyuncu.tscn" id="1_oyuncu"]
 [ext_resource type="TileSet" path="res://assets/tileset.tres" id="1_w8frs"]
-[ext_resource type="Script" path="res://scripts/oyuncu.gd" id="3_mx8sn"]
 
 [node name="Level" type="Node2D" unique_id=1548973867]
 
@@ -12,7 +11,12 @@ tile_set = ExtResource("1_w8frs")
 
 [node name="Oyuncu" type="CharacterBody2D" parent="." unique_id=1374346888 instance=ExtResource("1_oyuncu")]
 position = Vector2(320, 180)
-script = ExtResource("3_mx8sn")
+
+[node name="Kamera" parent="Oyuncu" index="2"]
+limit_left = 0
+limit_top = 0
+limit_right = 640
+limit_bottom = 352
 
 [node name="Bilgi" type="Label" parent="." unique_id=1990080824]
 offset_left = 24.0
@@ -20,3 +24,5 @@ offset_top = 28.0
 offset_right = 400.0
 offset_bottom = 60.0
 text = "USTTEN GORUNUM - WASD / yon tuslari ile hareket"
+
+[editable path="Oyuncu"]

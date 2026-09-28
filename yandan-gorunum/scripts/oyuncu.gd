@@ -11,6 +11,11 @@ extends CharacterBody2D
 @export var hava_kontrolu: float = 0.85
 @export var kojot_suresi: float = 0.12
 @export var zipla_tampon_suresi: float = 0.12
+## Tus erken birakilinca yukari hiz bu carpanla kisilir (0-1; kucuk = kisa ziplama).
+@export var kesme_carpani: float = 0.45
+## Yatay hizlanma ve durma (px/s^2). Havada `hava_kontrolu` ile olceklenir.
+@export var ivme: float = 1400.0
+@export var surtunme: float = 1200.0
 
 var _kojot: float = 0.0
 var _tampon: float = 0.0
@@ -36,14 +41,14 @@ func _physics_process(delta: float) -> void:
         _kojot = 0.0
 
     if Input.is_action_just_released("zipla") and velocity.y < 0.0:
-        velocity.y *= 0.45
+        velocity.y *= kesme_carpani
 
     var yon: float = Input.get_axis("move_left", "move_right")
     var carpan: float = 1.0 if is_on_floor() else hava_kontrolu
     if yon != 0.0:
-        velocity.x = move_toward(velocity.x, yon * hiz, 1400.0 * delta * carpan)
+        velocity.x = move_toward(velocity.x, yon * hiz, ivme * delta * carpan)
     else:
-        velocity.x = move_toward(velocity.x, 0.0, 1200.0 * delta * carpan)
+        velocity.x = move_toward(velocity.x, 0.0, surtunme * delta * carpan)
 
     move_and_slide()
 

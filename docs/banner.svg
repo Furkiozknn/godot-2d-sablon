@@ -1,36 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 250" width="1200" height="250" role="img" aria-label="godot-2d-sablon - Godot 4.7 icin iki calisir 2D iskelet proje: ustten gorunum ve yandan gorunum, hissi ayarlanmis karakter denetleyicileriyle">
-<defs>
-  <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-    <stop offset="0%" stop-color="#17161d"/><stop offset="58%" stop-color="#0e0d12"/><stop offset="100%" stop-color="#0b0b0f"/>
-  </linearGradient>
-  <linearGradient id="name" x1="0%" y1="0%" x2="100%" y2="0%">
-    <stop offset="0%" stop-color="#f2efe6"/><stop offset="62%" stop-color="#e7dcc0"/><stop offset="100%" stop-color="#c9a961"/>
-  </linearGradient>
-  <linearGradient id="hair" x1="0%" y1="0%" x2="100%" y2="0%">
-    <stop offset="0%" stop-color="#c9a961" stop-opacity="0.5"/><stop offset="100%" stop-color="#c9a961" stop-opacity="0"/>
-  </linearGradient>
-  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
-    <feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-  </filter>
-</defs>
-<rect width="1200" height="250" fill="url(#bg)"/><text x="54" y="96" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" font-size="44" fill="url(#name)" letter-spacing="-1">godot-2d-sablon</text>
-<text x="56" y="132" font-family="'Segoe UI',Verdana,Helvetica,sans-serif" font-size="17" fill="#c7c2b6" opacity="0.92">Iki calisir 2D iskelet: ustten gorunum ve yandan gorunum.</text>
-<line x1="56" y1="152" x2="330" y2="152" stroke="url(#hair)" stroke-width="1.5"/><rect x="56" y="176" width="93" height="26" rx="13" fill="#141419" stroke="#478cbf" stroke-opacity="0.45"/>
-<text x="102" y="193" text-anchor="middle" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#478cbf">Godot 4.7</text>
-<rect x="159" y="176" width="85" height="26" rx="13" fill="#141419" stroke="#6cb6ff" stroke-opacity="0.45"/>
-<text x="201" y="193" text-anchor="middle" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#6cb6ff">2 sablon</text>
-<rect x="254" y="176" width="144" height="26" rx="13" fill="#141419" stroke="#c9a961" stroke-opacity="0.45"/>
-<text x="326" y="193" text-anchor="middle" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#c9a961">GL Compatibility</text>
-<rect x="408" y="176" width="181" height="26" rx="13" fill="#141419" stroke="#4ade9e" stroke-opacity="0.45"/>
-<text x="499" y="193" text-anchor="middle" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#4ade9e">640x360 pixel-perfect</text><rect x="676" y="158" width="134" height="9" rx="3" fill="#2f2f3a"/>
-<rect x="676" y="158" width="134" height="3" rx="1.5" fill="#478cbf" opacity="0.55"/>
-<rect x="1088" y="158" width="88" height="9" rx="3" fill="#2f2f3a"/>
-<rect x="1088" y="158" width="88" height="3" rx="1.5" fill="#478cbf" opacity="0.55"/>
-<path d="M806.0 158.0 L812.8 150.8 L819.6 144.1 L826.4 137.6 L833.2 131.5 L840.0 125.8 L846.9 120.4 L853.7 115.4 L860.5 110.7 L867.3 106.4 L874.1 102.4 L880.9 98.8 L887.7 95.6 L894.5 92.7 L901.3 90.1 L908.1 87.9 L915.0 86.1 L921.8 84.6 L928.6 83.4 L935.4 82.7 L942.2 82.2 L949.0 82.2 L955.8 82.4 L962.6 83.1 L969.4 84.1 L976.2 85.4 L983.0 87.1 L989.9 89.2 L996.7 91.6 L1003.5 94.3 L1010.3 97.4 L1017.1 100.9 L1023.9 104.7 L1030.7 108.9 L1037.5 113.4 L1044.3 118.3 L1051.1 123.6 L1058.0 129.1 L1064.8 135.1 L1071.6 141.4 L1078.4 148.0 L1085.2 155.0 L1092.0 158.0" fill="none" stroke="#4ade9e" stroke-width="2.4" stroke-linecap="round" opacity="0.95"/>
-<circle cx="943.7" cy="82.2" r="3.4" fill="#4ade9e"/>
-<text x="943.7" y="71.2" text-anchor="middle" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="11" fill="#4ade9e">58 px</text>
-<rect x="793" y="143" width="13" height="15" rx="2.5" fill="#e7dcc0"/>
-<rect x="797" y="147" width="3" height="3" fill="#0e0d12"/>
-<line x1="810" y1="156" x2="810" y2="180" stroke="#6b6b77" stroke-dasharray="3 3"/>
-<text x="814" y="180" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="10.5" fill="#6b6b77">kenar</text>
-<text x="676" y="198" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="10.5" fill="#5c5c68">gercek yay - oyuncu.gd sabitleri, 60 Hz</text><text x="56" y="228" font-family="'Cascadia Code','JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12" fill="#5c5c68">Bos projeyi acip hareket kodunu sifirdan yazmak yerine, hissi ayarlanmis bir denetleyiciyle basla.</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-labelledby="t d">
+<!-- generated by github.com/Furkiozknn/Furkiozknn assets/banner/banner.py; edit banners.json there, not this file -->
+<title id="t">godot-2d-sablon</title><desc id="d">Two Godot 4 2D starters whose jump feel is measured, not guessed.</desc>
+<defs><radialGradient id="g" cx="1" cy="0" r="0.9"><stop offset="0" stop-color="#db61a2" stop-opacity=".16"/><stop offset="1" stop-color="#db61a2" stop-opacity="0"/></radialGradient>
+<style>.u{font:700 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,'DejaVu Sans',sans-serif;letter-spacing:.22em;fill:#d4a95c}.n{font:700 60px/1 ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace;fill:#f2efe6}
+.p{font:400 21px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,'DejaVu Sans',sans-serif;fill:#c9d1d9}.c{fill:none;stroke:#db61a2;stroke-opacity:.55}.ct{font:600 13px/1 ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace;fill:#db61a2}
+.k{font:400 13px/1 ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace;fill:#7d8590}.d{font:500 14px/1 ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace;fill:#e6edf3}.f{font:400 12px/1 ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace;fill:#484f58}</style></defs>
+<rect width="1280" height="320" rx="14" fill="#0d1117"/><rect width="1280" height="320" rx="14" fill="url(#g)"/>
+<rect x="0.5" y="0.5" width="1279" height="319" rx="13.5" fill="none" stroke="#30363d"/>
+<rect x="72" y="0" width="140" height="4" fill="#db61a2"/>
+<text x="72" y="64" class="u">GODOT 4 · TEMPLATE</text>
+<text x="72" y="128" class="n">godot-2d-sablon</text>
+<text x="72" y="176" class="p">Two Godot 4 2D starters whose jump feel is</text><text x="72" y="206" class="p">measured, not guessed.</text><rect x="72" y="244" width="96" height="30" rx="15" class="c"/><text x="120" y="264" class="ct" text-anchor="middle">Godot 4.7</text><rect x="177.60000000000002" y="244" width="188" height="30" rx="15" class="c"/><text x="272" y="264" class="ct" text-anchor="middle">top-down + side-view</text><rect x="375.6" y="244" width="154" height="30" rx="15" class="c"/><text x="453" y="264" class="ct" text-anchor="middle">GL Compatibility</text>
+<line x1="790" y1="60" x2="790" y2="260" stroke="#30363d"/>
+<circle cx="826" cy="96" r="4" fill="#db61a2" opacity="1.00"/><text x="842" y="101" class="k">jumps</text><text x="930" y="101" class="d">coyote time, buffering</text><circle cx="826" cy="134" r="4" fill="#db61a2" opacity="0.85"/><text x="842" y="139" class="k">varies</text><text x="930" y="139" class="d">jump height by hold time</text><circle cx="826" cy="172" r="4" fill="#db61a2" opacity="0.70"/><text x="842" y="177" class="k">measures</text><text x="930" y="177" class="d">curves in the real engine</text><circle cx="826" cy="210" r="4" fill="#db61a2" opacity="0.55"/><text x="842" y="215" class="k">exports</text><text x="930" y="215" class="d">web and Windows presets</text><circle cx="826" cy="248" r="4" fill="#db61a2" opacity="0.40"/><text x="842" y="253" class="k">updates</text><text x="930" y="253" class="d">git diff + apply --3way</text>
+<text x="1208" y="290" class="f" text-anchor="end">github.com/Furkiozknn/godot-2d-sablon</text>
+</svg>
