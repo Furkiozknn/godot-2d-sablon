@@ -2,6 +2,9 @@
 
 # Godot 2D Şablonları
 
+<p align="center"><img src="docs/reel/reel.gif" alt="godot-2d-sablon - 15 saniyelik tanıtım videosu" width="720"></p>
+<p align="center"><sub><a href="docs/reel/reel.mp4">Sesli MP4 sürümü</a></sub></p>
+
 **Godot 4.7 için iki çalışır durumda 2D iskelet proje: üstten görünüm ve yandan görünüm.**
 Boş bir proje açıp hareket kodunu sıfırdan yazmak yerine, hissi ayarlanmış bir
 karakter denetleyicisiyle başlayın.
