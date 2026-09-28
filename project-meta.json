@@ -52,9 +52,8 @@
   },
   "tests": {
     "count": 37,
-    "framework": "pytest",
-    "command": "python3 -m pytest testler -q",
-    "evidence": "37 passed"
+    "source": "CI log: `37 passed`",
+    "measured": "2026-09-28"
   },
   "ci": {
     "workflows": [
