@@ -34,7 +34,7 @@
     "top-down",
     "turkce"
   ],
-  "summary": "Two Godot 4.7 starters that already feel right to play: top-down with 8-way accelerated movement, and side-view with coyote time, jump buffering and variable jump height. The feel is measured, not guessed - the jump curves come from running the real _physics_process at the project's 60 Hz fixed step.",
+  "summary": "Two ready-to-run Godot 4.7 2D starters - top-down with accelerated 8-way movement, side-view with coyote time and jump buffering - with jump curves measured from the real physics step.",
   "key_features": [
     "Two starter projects that already feel right to play: top-down with 8-way accelerated movement, side-view with coyote time, jump buffering and variable jump height",
     "The feel is measured, not guessed: jump curves come from running the real _physics_process at the project's 60 Hz fixed step",
