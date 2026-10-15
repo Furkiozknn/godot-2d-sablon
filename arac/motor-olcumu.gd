@@ -206,6 +206,7 @@ func _tampon_adimi(s: Dictionary) -> bool:
                 _oyuncu.velocity = Vector2.ZERO
                 s.k = 0
                 s.zipladi = false
+                s.tepe = s.taban
                 s.faz = 2
         2:
             s.k += 1
@@ -215,8 +216,12 @@ func _tampon_adimi(s: Dictionary) -> bool:
                 Input.action_release("zipla")
             if s.k > s.inis and _oyuncu.velocity.y < 0.0:
                 s.zipladi = true
+            # Tus inisten once birakildi: tampondan gelen ziplama kisa olmali.
+            if s.k > s.inis:
+                s.tepe = minf(s.tepe, _oyuncu.position.y)
             if s.k >= s.inis + _saniye(0.25):
                 _sonuc[s.ad] = s.zipladi
+                _sonuc[s.ad + "_tepe"] = s.taban - s.tepe
                 return true
     return false
 

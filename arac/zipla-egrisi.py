@@ -91,13 +91,18 @@ def kos(sure, y0=0.0, zemin_biter=None, bas_t=None, birak_t=None):
 
         basildi = bas_t is not None and abs(t - bas_t) < DT / 2
         tampon = TAMPON if basildi else tampon - DT
+        # Tus su an basili mi: basildigi adimdan birakildigi adima kadar.
+        basili = (bas_t is not None and t > bas_t - DT / 2
+                  and (birak_t is None or t < birak_t - DT / 2))
 
         if tampon > 0.0 and kojot > 0.0:
             vy, tampon, kojot = -ZIPLA_GUCU, 0.0, 0.0
             if zipladi is None:
                 zipladi = t
-
-        if birak_t is not None and abs(t - birak_t) < DT / 2 and vy < 0.0:
+            # oyuncu.gd: tus coktan birakildiysa tamponlu ziplama da kisalir.
+            if not basili:
+                vy *= KESME
+        elif birak_t is not None and abs(t - birak_t) < DT / 2 and vy < 0.0:
             vy *= KESME
 
         y += vy * DT
@@ -107,6 +112,18 @@ def kos(sure, y0=0.0, zemin_biter=None, bas_t=None, birak_t=None):
 
     return {"iz": iz, "zipladi": zipladi, "kondu": kondu,
             "tepe": max(v for _, v in iz)}
+
+
+def tampon_tepesi(onceden, birak=True):
+    """Inişe `onceden` s kala basılan tuşla tampondan gelen zıplamanın tepesi.
+
+    birak=True: tuş bir fizik adımı sonra bırakılır (havada dokunup bırakmak).
+    Tepe zeminden, inişten sonraki en yüksek nokta (px).
+    """
+    inis = kos(0.72, y0=45.0)["kondu"]
+    bas = inis - onceden
+    r = kos(1.2, y0=45.0, bas_t=bas, birak_t=(bas + DT) if birak else None)
+    return max(v for t, v in r["iz"] if t > inis)
 
 
 def main():
@@ -134,6 +151,8 @@ def main():
         r = kos(0.72, y0=45.0, bas_t=inis - onceden)
         print(f"   inişe {onceden:.2f} s kala basıldı     : "
               f"{'iniş anında zıpladı' if r['zipladi'] is not None else 'tuş yutuldu'}")
+    print(f"   inişe 0,08 s kala dokunup bırakıldı: {tampon_tepesi(0.08):5.1f} px  "
+          f"(basılı tutulsa {tampon_tepesi(0.08, birak=False):5.1f} px)")
 
 
 if __name__ == "__main__":

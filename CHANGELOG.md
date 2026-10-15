@@ -16,6 +16,13 @@ Henüz sürüm etiketi yok; maddeler commit tarihine göre sıralı.
 
 ### Oyunu etkileyenler
 
+- **[yandan]** `scripts/oyuncu.gd`: Havada zıplama tuşuna dokunup bırakan
+  oyuncu, inişte tampondan **tam** zıplama alıyordu: kesme yalnızca tuşun
+  bırakıldığı adımda uygulanıyordu ve o an oyuncu düşüyordu. Artık tampondan
+  gelen zıplama, tuş o an basılı değilse kısa zıplama oluyor. Godot 4.7.2'de
+  ölçülen tepe 54,0 px'ten 12,6 px'e indi; tuşu basılı tutan için hiçbir şey
+  değişmedi (58 px).
+
 - **[yandan]** `scenes/level.tscn`: Örnek seviyenin iki ucuna görünmez duvar
   (`SolDuvar`, `SagDuvar`) eklendi. Önceden zeminin kenarından yürüyen oyuncu
   sonsuza kadar düşüyordu.

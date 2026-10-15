@@ -39,8 +39,12 @@ func _physics_process(delta: float) -> void:
         velocity.y = -zipla_gucu
         _tampon = 0.0
         _kojot = 0.0
-
-    if Input.is_action_just_released("zipla") and velocity.y < 0.0:
+        # Tampondan gelen ziplama, tus o an coktan birakilmissa kisa ziplamadir.
+        # Yoksa havada tusa dokunup birakan oyuncu, inince tam ziplama alirdi:
+        # birakma ani yukselmeden once geldigi icin asagidaki kesme kacirilirdi.
+        if not Input.is_action_pressed("zipla"):
+            velocity.y *= kesme_carpani
+    elif Input.is_action_just_released("zipla") and velocity.y < 0.0:
         velocity.y *= kesme_carpani
 
     var yon: float = Input.get_axis("move_left", "move_right")
