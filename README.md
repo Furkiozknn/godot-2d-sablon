@@ -101,10 +101,48 @@ alanını kendi oyununuzun adıyla değiştirin.
 | Hareket | `WASD` / yön tuşları | `A` `D` / sol-sağ |
 | Zıplama | — | `Boşluk` veya `W` |
 | Etkileşim | `E` | — |
+| Menü / duraklat | `Esc` | `Esc` |
 
 > `etkilesim` (E, üstten) ve `asagi` (S / aşağı ok, yandan) girdi eylemleri
 > tanımlı ama henüz hiçbir koda bağlı değil; kendi etkileşiminizi, aşağı
 > inme ya da eğilme davranışınızı bağlamanız için hazır bekliyorlar.
+
+## Duraklatma menüsü ve tuş atama
+
+İki projede de `Esc` oyunu duraklatıp bir menü açar: her eylemin tuşu
+listelenir, bir tuşa tıklayıp yeni tuşa basınca değişir (`Esc` vazgeçer).
+Oyuncunun seçtiği tuşlar `user://girdi.cfg`'ye kaydedilir ve oyun her
+açıldığında geri yüklenir; **Varsayılan tuşlar** her şeyi `project.godot`'taki
+haline döndürür.
+
+İki parça, ikisi de `project.godot`'ta autoload olarak kayıtlı:
+
+| Dosya | Autoload | Ne yapar |
+|---|---|---|
+| `scripts/girdi_ayarlari.gd` | `GirdiAyarlari` | Tuşları okur, değiştirir, kaydeder, yükler. Arayüzü yok. |
+| `scenes/duraklat.tscn` + `scripts/duraklat.gd` | `Duraklat` | Menünün kendisi; arayüz koddan kuruluyor. |
+
+- Yalnızca klavye tuşları değişir; aynı eylemdeki gamepad ve fare olayları
+  yerinde kalır. Kayıt fiziksel tuş kodudur: klavye düzeni (Q, F) değişse de
+  tuş klavyede aynı yerde kalır.
+- Dosyaya yalnızca varsayılandan **farklı** eylemler yazılır. Şablonun
+  varsayılan tuşlarını sonradan değiştirirseniz, oyuncunun dokunmadığı
+  eylemler yeni varsayılanı alır.
+- Bozuk bir kayıt ya da artık projede olmayan bir eylem sessizce atlanır;
+  oyun yine açılır.
+- Yeni bir girdi eylemi eklediğinizde menüde kendiliğinden görünür; Türkçe
+  adını `duraklat.gd`'deki `ETIKETLER` sözlüğüne ekleyin (`testler/` eksik
+  adı yakalar).
+- Menüyü istemiyorsanız `project.godot` → **Autoload** sekmesinden
+  `Duraklat`'ı kaldırın; `GirdiAyarlari` tek başına da çalışır.
+
+Davranış gerçek Godot'ta sınanıyor (25 kontrol: atama, kayıt, yeniden
+yükleme, bozuk kayıt, sıfırlama, menüden atama ve Esc ile vazgeçme):
+
+```bash
+godot --headless --path yandan-gorunum --import
+godot --headless --path yandan-gorunum --script "$PWD/arac/girdi-ayarlari-testi.gd"   # GIRDI_TAMAM 25 kontrol
+```
 
 ## Yandan görünümdeki üç önemli detay
 
@@ -214,8 +252,11 @@ hızlı, ve web export'unda da aynı renderer çalışıyor (WebGL 2).
   scenes/
     level.tscn         ana sahne: seviye, kamera sınırları, oyuncu örneği
     oyuncu.tscn        oyuncu sahnesi: görsel, çarpışma, kamera
+    duraklat.tscn      duraklatma menüsü (autoload: Duraklat)
   scripts/
     oyuncu.gd          karakter denetleyicisi
+    girdi_ayarlari.gd  tuş atama ve kaydı (autoload: GirdiAyarlari)
+    duraklat.gd        menünün arayüzü
   assets/
     sprites/           görseller
 ```
@@ -304,7 +345,7 @@ CI kırmızı yanar.
 ```bash
 python3 arac/zipla-egrisi.py    # eğrileri yazdırır
 python3 arac/dogrula.py         # README ile karşılaştırır (8 kontrol)
-python3 -m pytest testler -q    # denetleyici davranışı ve README tabloları (41 test)
+python3 -m pytest testler -q    # denetleyici davranışı, README tabloları, menü modülü (50 test)
 ```
 
 `dogrula.py` README'deki sayı değiştiğinde kırmızı yanar, ve doğrusu budur —
@@ -376,6 +417,8 @@ godot --headless --fixed-fps 60 --path yandan-gorunum --script "$PWD/arac/motor-
 python3 arac/motor-karsilastir.py motor.log
 godot --headless --fixed-fps 60 --path yandan-gorunum --script "$PWD/arac/seviye-sinirlari.gd"
 godot --headless --fixed-fps 60 --path ustten-gorunum --script "$PWD/arac/seviye-sinirlari.gd"
+godot --headless --path yandan-gorunum --script "$PWD/arac/girdi-ayarlari-testi.gd"
+godot --headless --path ustten-gorunum --script "$PWD/arac/girdi-ayarlari-testi.gd"
 ```
 
 Kendi projenize taşınması gereken bir değişiklikse [CHANGELOG](CHANGELOG.md)'a
