@@ -394,8 +394,8 @@ referansı. Depoyu klonlayan kişi ilk saatini olmayan bir `.tscn`'i ararken
 harcar, ve motor bunu açılışta her zaman söylemez. Aynı hesaptaki
 [godot-refcheck](https://github.com/Furkiozknn/godot-refcheck) iki projeyi de
 tarıyor — motoru indirmeden — ve bulgular SARIF olarak kod taramaya gidiyor.
-Şu an ikisi de temiz: `ustten-gorunum` 12 dosya / 6 referans, `yandan-gorunum`
-12 dosya / 6 referans, hiçbirinde sorun yok.
+Şu an ikisi de temiz: `ustten-gorunum` 17 dosya / 9 referans, `yandan-gorunum`
+17 dosya / 9 referans (CI: `2 projects, 34 files, 18 references`), hiçbirinde sorun yok.
 
 ## Katkı
 
