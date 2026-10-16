@@ -16,6 +16,14 @@ Henüz sürüm etiketi yok; maddeler commit tarihine göre sıralı.
 
 ### Oyunu etkileyenler
 
+- **[yandan] [üstten]** Yeni: duraklatma menüsü ve tuş atama. `Esc` oyunu
+  duraklatır; her eylemin tuşu menüden değiştirilir ve `user://girdi.cfg`'ye
+  kaydedilir. Yeni dosyalar: `scripts/girdi_ayarlari.gd`,
+  `scripts/duraklat.gd`, `scenes/duraklat.tscn` (ve `.uid`'leri);
+  `project.godot`'a `[autoload]` bölümü eklendi; `scenes/level.tscn`'deki
+  bilgi yazısı `Esc` menüsünü anıyor. Kendi projenize almak için bu dosyaları
+  kopyalayıp iki autoload satırını ekleyin.
+
 - **[yandan]** `scripts/oyuncu.gd`: Havada zıplama tuşuna dokunup bırakan
   oyuncu, inişte tampondan **tam** zıplama alıyordu: kesme yalnızca tuşun
   bırakıldığı adımda uygulanıyordu ve o an oyuncu düşüyordu. Artık tampondan

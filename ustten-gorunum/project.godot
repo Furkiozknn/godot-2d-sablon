@@ -7,6 +7,12 @@ config/description="Top-down 2D iskelet: 8 yonlu hareket, TileMapLayer hazir."
 run/main_scene="res://scenes/level.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GirdiAyarlari="*res://scripts/girdi_ayarlari.gd"
+Duraklat="*res://scenes/duraklat.tscn"
+
 [display]
 
 window/size/viewport_width=640
