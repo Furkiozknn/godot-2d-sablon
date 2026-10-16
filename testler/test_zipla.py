@@ -159,6 +159,33 @@ def test_tampon_penceresi_gd_dosyasindaki_sure_kadar():
     assert disarda["zipladi"] is None
 
 
+def test_havada_dokunup_birakilan_tus_inince_kisa_ziplatir():
+    """Tampon tuşu hatırlar, ama bırakıldığını da hatırlamalı.
+
+    Önceden kesme yalnızca `is_action_just_released` anında uygulanıyordu; o an
+    oyuncu düşerken geldiği için kaçırılıyor, iniş anındaki tamponlu zıplama tam
+    yükseklikte oluyordu. Dokunup bırakmak her yerde kısa zıplama olmalı.
+    """
+    kisa = z.tampon_tepesi(0.08)
+    tutuldu = z.tampon_tepesi(0.08, birak=False)
+    assert kisa < tutuldu * 0.5, (kisa, tutuldu)
+    # Yerdeyken basıp aynı adımda bırakmakla aynı kısa zıplama.
+    yerde = z.kos(0.72, bas_t=0.0, birak_t=0.0)["tepe"]
+    assert kisa == pytest.approx(yerde, abs=1.0)
+
+
+def test_basili_tutulan_tamponlu_ziplama_tam_ziplamadir():
+    tam = z.kos(0.72, bas_t=0.0)["tepe"]
+    assert z.tampon_tepesi(0.08, birak=False) == pytest.approx(tam, abs=0.5)
+
+
+def test_tamponlu_ziplama_bir_kez_kesilir():
+    """Basma ve bırakma aynı adımdaysa kesme iki kez uygulanmamalı."""
+    yerde = z.kos(0.72, bas_t=0.0, birak_t=0.0)["tepe"]
+    v = z.ZIPLA_GUCU * z.KESME
+    assert yerde == pytest.approx(v * v / (2 * z.YERCEKIMI), rel=0.25)
+
+
 def test_yuksekten_dusus_gercekten_zemine_iniyor():
     r = z.kos(1.2, y0=45.0)
     assert r["kondu"] is not None

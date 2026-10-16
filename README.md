@@ -126,7 +126,8 @@ Bu betik gövdenin Python'a taşınmış kopyası; aynı senaryolar her PR'da ge
    (`oyuncu.gd`, `_kojot`)
 2. **Zıplama tamponu** (jump buffer) — yere inmeden hemen önce boşluğa
    bastıysanız, yere değdiğiniz an zıplarsınız. Basılan tuş yutulmaz.
-   (`oyuncu.gd`, `_tampon`)
+   Havada dokunup bıraktıysanız iniş anındaki zıplama da kısa olur
+   (motorda 12,6 px; tuş basılı kalsa 58 px). (`oyuncu.gd`, `_tampon`)
 3. **Değişken zıplama yüksekliği** — tuşu erken bırakırsanız zıplama kısalır
    (`velocity.y *= kesme_carpani`). Kısa/uzun zıplama kontrolü verir.
 
@@ -303,7 +304,7 @@ CI kırmızı yanar.
 ```bash
 python3 arac/zipla-egrisi.py    # eğrileri yazdırır
 python3 arac/dogrula.py         # README ile karşılaştırır (8 kontrol)
-python3 -m pytest testler -q    # denetleyici davranışı ve README tabloları (37 test)
+python3 -m pytest testler -q    # denetleyici davranışı ve README tabloları (41 test)
 ```
 
 `dogrula.py` README'deki sayı değiştiğinde kırmızı yanar, ve doğrusu budur —
@@ -331,6 +332,7 @@ python3 arac/motor-karsilastir.py motor.log
 motor: Godot 4.7.2-stable (official), 60 Hz
   TAMAM tam         motor 58.39 px, python 58.33 px
   TAMAM erken       motor 35.44 px, python 35.38 px
+  TAMAM tampon_008_tepe motor 12.56 px, python 12.50 px
   TAMAM kojot_010   motor True, python True
   TAMAM kojot_015   motor False, python False
   TAMAM tampon_008  motor True, python True

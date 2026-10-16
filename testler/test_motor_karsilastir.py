@@ -78,6 +78,13 @@ def test_davranis_ayrisirsa_kirmizi(tmp_path, ad):
     assert k.main(["x", str(_log(tmp_path, o))]) == 1
 
 
+def test_tamponlu_ziplama_motorda_tam_yukseklikteyse_kirmizi(tmp_path):
+    """Eski hata: dokunup birakilan tus inince tam ziplama veriyordu."""
+    o = _uyumlu()
+    o["tampon_008_tepe"] = o["tam"]
+    assert k.main(["x", str(_log(tmp_path, o))]) == 1
+
+
 def test_farkli_fizik_adimi_kirmizi(tmp_path):
     o = _uyumlu()
     o["tick"] = 120

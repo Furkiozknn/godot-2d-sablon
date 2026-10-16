@@ -65,6 +65,8 @@ def python_olcumu(z):
         "kojot_015": z.kos(0.72, zemin_biter=0.10, bas_t=0.25)["zipladi"] is not None,
         "tampon_008": z.kos(0.72, y0=45.0, bas_t=dusus - 0.08)["zipladi"] is not None,
         "tampon_020": z.kos(0.72, y0=45.0, bas_t=dusus - 0.20)["zipladi"] is not None,
+        # Motorda tuş basıldıktan bir adım sonra bırakılıyor: kısa zıplama.
+        "tampon_008_tepe": z.tampon_tepesi(0.08),
         "tick": z.TICK,
     }
 
@@ -72,11 +74,12 @@ def python_olcumu(z):
 def karsilastir(motor, kopya):
     """(ad, motor, kopya, tamam) listesi döndürür."""
     sonuc = []
-    for ad in ("tam", "erken"):
+    for ad in ("tam", "erken", "tampon_008_tepe"):
         m, k = motor.get(ad), kopya[ad]
-        tamam = (isinstance(m, (int, float))
-                 and abs(m - k) <= TOLERANS_PX
-                 and round(m) == round(k))
+        tamam = isinstance(m, (int, float)) and abs(m - k) <= TOLERANS_PX
+        # README tam ve erken için tam piksel yazıyor; o sayı da tutmalı.
+        if ad in ("tam", "erken"):
+            tamam = tamam and round(m) == round(k)
         sonuc.append((ad, m, k, tamam))
     for ad in ("kojot_010", "kojot_015", "tampon_008", "tampon_020", "tick"):
         m, k = motor.get(ad), kopya[ad]

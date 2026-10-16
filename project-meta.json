@@ -51,9 +51,9 @@
     "videos": []
   },
   "tests": {
-    "count": 37,
-    "source": "CI log: `37 passed`",
-    "measured": "2026-09-28"
+    "count": 41,
+    "source": "CI log: `41 passed`",
+    "measured": "2026-10-15"
   },
   "ci": {
     "workflows": [
